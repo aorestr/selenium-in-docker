@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class BasePage(object):
@@ -15,6 +12,8 @@ class BasePage(object):
 
     BASE_URL = "http://automationpractice.com/index.php"
     page_uri = ""
+    BASE_TITLE = "My Store"
+    specific_title = ""
 
     def __init__(self, driver, elements_timeout):
         self._driver = driver
@@ -31,7 +30,12 @@ class BasePage(object):
         return self._get_element(self.__logo_image_locator)
 
     # Methods
+    @property
     def _web_driver_waiter(self):
+        """
+        WebDriverWait object in case it's needed
+        :return:
+        """
         return WebDriverWait(self._driver, self._elements_timeout)
 
     def _get_element(self, xpath):
@@ -40,17 +44,29 @@ class BasePage(object):
         :param xpath: xpath of the element to wait for
         :return: the WebElement
         """
-        return self._web_driver_waiter().until(
-            EC.presence_of_element_located((By.XPATH, xpath))
-        )
+        self._driver.find_element_by_xpath(xpath)
+
+    def current_url_matches(self):
+        """
+        Make sure the current url of the page matches the expected title
+        :return:
+        """
+        url = self.BASE_URL + self.page_uri
+        current_url = self._driver.current_url
+        assert url in current_url, "URL '{0}' not on the current URL of the page ('{1}')".format(url, current_url)
 
     def title_matches(self):
         """
         Make sure the title of the page matches the expected title
         :return:
         """
-        url = self.BASE_URL + self.page_uri
-        assert url in self._driver.title, "URL '{}' not in the title of the page"
+        title = self.specific_title + self.BASE_TITLE
+        current_title = self._driver.title
+        assert title in current_title, "Name '{0}' not on the title of the page ('{1}')".format(title, current_title)
 
     def wait_for_page_to_load(self):
+        """
+        Wait for some web elements to show up on the screen
+        :return:
+        """
         self.logo_image

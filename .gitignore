@@ -1,6 +1,9 @@
 # IDEs
 .idea/
 
+# Browsers drivers
+geckodriver*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
