@@ -31,7 +31,7 @@ def open_and_close_browser(request):
     :return: a BasePage instance
     """
     if request.config.getoption("--remote"):
-        driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", DesiredCapabilities.FIREFOX)
+        driver = webdriver.Remote("http://selenium-hub:4444/wd/hub", DesiredCapabilities.FIREFOX)
     else:
         driver = webdriver.Firefox(executable_path=GECKODRIVER_PATH)
     driver.implicitly_wait(IMPLICITLY_WAIT)
