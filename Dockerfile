@@ -25,4 +25,4 @@ RUN apk add bash
 RUN pip install -r requirements.txt
 
 # Run the tests
-CMD ["pytest", "-v", "--remote"]
+CMD ["pytest", "-v", "--remote", "--rmt-host=selenium-hub", "--rmt-port=4444"]

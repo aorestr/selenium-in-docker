@@ -7,7 +7,10 @@ services:
     depends_on:
      - selenium-hub
      - selenium-firefox
-    command: ./wait-for-it.sh -t 15 selenium-firefox:5555 -- pytest -v --remote --rmt-host=selenium-hub --rmt-port=4444
+    command: [
+      "./wait-for-it.sh", "-t", "15", "selenium-firefox:5555", "--",
+      "pytest", "-v", "--remote", "--rmt-host=selenium-hub", "--rmt-port=4444"
+    ]
     networks:
       selenium_net: {}
 
