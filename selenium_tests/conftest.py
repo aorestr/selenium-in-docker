@@ -14,8 +14,9 @@ GECKODRIVER_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "gecko
 
 
 @pytest.fixture(scope="function")
-def open_browser():
+def open_and_close_browser():
     driver = webdriver.Firefox(executable_path=GECKODRIVER_PATH)
     driver.implicitly_wait(IMPLICITLY_WAIT)
     driver.get(TESTING_URL)
-    return BasePage(driver, IMPLICITLY_WAIT)
+    yield BasePage(driver)
+    driver.close()
