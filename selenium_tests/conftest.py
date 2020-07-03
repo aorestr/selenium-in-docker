@@ -20,20 +20,44 @@ def pytest_addoption(parser):
     :param parser:
     :return:
     """
-    parser.addoption("--remote", action="store_true", default=False, help="In case you run the tests using docker")
+    parser.addoption(
+        "--remote", action="store_true", default=False,
+        help="Set this flag if the driver you are using is not on the local system"
+    )
+    parser.addoption(
+        "--rmt-host", action="store", default="localhost", type=str,
+        help="Set the host name or the host IP of the system who contains the web driver. By default 'localhost'"
+    )
+    parser.addoption(
+        "--rmt-port", action="store", default=4444, type=int,
+        help="Set the port where the host who has the driver is listening. By default '4444'"
+    )
+
+
+@pytest.fixture(scope="session")
+def get_driver(request):
+    """
+    Generate the Selenium driver that will be used by the tests
+    :param request:
+    :return: a callable that generates the driverSelenium WebDriver instance
+    """
+    if request.config.getoption("--remote"):
+        url = "http://{host}:{port}/wd/hub".format(
+            host=request.config.getoption("--rmt-host"), port=request.config.getoption("--rmt-port")
+        )
+        return lambda: webdriver.Remote(url, DesiredCapabilities.FIREFOX)
+    else:
+        return lambda: webdriver.Firefox(executable_path=GECKODRIVER_PATH)
 
 
 @pytest.fixture(scope="function")
-def open_and_close_browser(request):
+def open_and_close_browser(get_driver):
     """
     Open the browser and when the test is done it closes it
-    :param request:
+    :param get_driver: fixture that returns the Selenium driver
     :return: a BasePage instance
     """
-    if request.config.getoption("--remote"):
-        driver = webdriver.Remote("http://selenium-hub:4444/wd/hub", DesiredCapabilities.FIREFOX)
-    else:
-        driver = webdriver.Firefox(executable_path=GECKODRIVER_PATH)
+    driver = get_driver()
     driver.implicitly_wait(IMPLICITLY_WAIT)
     driver.get(TESTING_URL)
     yield BasePage(driver)
