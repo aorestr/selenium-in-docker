@@ -24,5 +24,5 @@ RUN apk add bash
 # Install all dependencies
 RUN pip install -r requirements.txt
 
-# Run the tests
-CMD ["pytest", "-v", "--remote", "--rmt-host=selenium-hub", "--rmt-port=4444"]
+# This Dockerfile hasn't got any CMD or ENTRYPOINT so it doesn't do anything by its own.
+# Check docker-compose.yml to see an implementation of the image
