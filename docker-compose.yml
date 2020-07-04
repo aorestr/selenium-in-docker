@@ -7,10 +7,11 @@ services:
     depends_on:
      - selenium-hub
      - selenium-firefox
+    entrypoint: ["./wait-for-it.sh", "-t", "15", "selenium-firefox:5555", "--"]
+    # the wait-for-it.sh command makes the container wait until the Selenium containers are ready to work
     command: [
-      "./wait-for-it.sh", "-t", "15", "selenium-firefox:5555", "--",
       "pytest", "-v", "--remote", "--rmt-host=selenium-hub", "--rmt-port=4444"
-    ] # the wait-for-it.sh command makes the container wait until the Selenium containers are ready to work
+    ]
     networks:
       selenium_net: {}
 
