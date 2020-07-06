@@ -10,8 +10,10 @@ services:
     entrypoint: ["./wait-for-it.sh", "-t", "15", "selenium-firefox:5555", "--"]
     # the wait-for-it.sh command makes the container wait until the Selenium containers are ready to work
     command: [
-      "pytest", "-v", "--remote", "--rmt-host=selenium-hub", "--rmt-port=4444"
+      "pytest", "--remote", "--rmt-host=selenium-hub", "--rmt-port=4444"
     ]
+    volumes:
+      - ./remote_reports/:/selenium_tests/reports/
     networks:
       selenium_net: {}
 

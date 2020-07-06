@@ -88,7 +88,7 @@ Let's suppose you want to take advantage of this process but you don't need all 
 Using our example, we will execute only the tests contained under the module `selenium_tests/tests/tests_searches.py`.
 Run the following:
 ```
-docker-compose build && docker-compose run --rm pytest-host pytest tests/test_searches.py -v --remote --rmt-host=selenium-hub --rmt-port=4444
+docker-compose build && docker-compose run --rm pytest-host pytest tests/test_searches.py --remote --rmt-host=selenium-hub --rmt-port=4444
 ```
 
 If you ran the `docker-compose up` command before and receive an error message similar to
