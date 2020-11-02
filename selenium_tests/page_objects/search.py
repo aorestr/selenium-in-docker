@@ -18,7 +18,7 @@ class SearchPage(BasePage):
 
     # Web elements
     @property
-    def results_counter_text(self):
+    def results_counter_text(self) -> int:
         """
         Returns the number of results of the search
         :return: the number of results of the search as an integer
@@ -26,7 +26,7 @@ class SearchPage(BasePage):
         return int(self._get_element(self._results_counter_text_locator).text.strip().split(" ")[0])
 
     @property
-    def error_notification_text(self):
+    def error_notification_text(self) -> str:
         return self._get_element(self._error_notification_text_locator).text.strip()
 
     # Methods

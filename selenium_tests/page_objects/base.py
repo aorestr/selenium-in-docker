@@ -28,20 +28,20 @@ class BasePage(object):
 
     # Web elements
     @property
-    def logo_image(self):
+    def logo_image(self) -> WebElement:
         return self._get_element(self._logo_image_locator)
 
     @property
-    def search_input(self):
+    def search_input(self) -> WebElement:
         return self._get_element(self._search_input_locator)
 
     @search_input.setter
-    def search_input(self, query):
+    def search_input(self, query: str) -> None:
         self.search_input.clear()
         self.search_input.send_keys(query)
 
     @property
-    def search_button(self):
+    def search_button(self) -> WebElement:
         return self._get_element(self._search_button_locator)
 
     # Methods
@@ -71,7 +71,7 @@ class BasePage(object):
         current_title = self._driver.title
         assert title in current_title, "Name '{0}' not on the title of the page ('{1}')".format(title, current_title)
 
-    def search_product(self, product):
+    def search_product(self, product: str):
         """
         Search for a product
         :param product: name to search by
