@@ -12,8 +12,8 @@ from .page_objects.base import BasePage
 
 
 IMPLICITLY_WAIT: Final = 30
-TESTING_URL = "http://automationpractice.com"
-GECKODRIVER_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "geckodriver")
+TESTING_URL: Final = "http://automationpractice.com"
+GECKODRIVER_PATH: Final = os.path.join(pathlib.Path(__file__).parent.absolute(), "geckodriver")
 
 
 def pytest_addoption(parser):
