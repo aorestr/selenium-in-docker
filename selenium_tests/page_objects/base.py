@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 
+from selenium.webdriver.remote.webelement import WebElement
+
+
 class BasePage(object):
 
     """
@@ -42,7 +45,7 @@ class BasePage(object):
         return self._get_element(self._search_button_locator)
 
     # Methods
-    def _get_element(self, xpath):
+    def _get_element(self, xpath: str) -> WebElement:
         """
         Wait for a element to be present on the screen
         :param xpath: xpath of the element to wait for
