@@ -10,7 +10,7 @@ help:
 	@echo "Run make with:"
 	@echo " > run-all-tests			...to run all tests using Docker Compose"
 	@echo " > tests-cleanup			...to remove undesired files after a tests execution."
-	@echo " > run-tests-and-clean		...call the previous two rules."
+	@echo " > run-tests-and-clean   ...call the previous two rules."
 
 run-all-tests:
 	@echo "Tests will be run now..."

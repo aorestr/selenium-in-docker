@@ -6,3 +6,4 @@
 **/*.pyc
 **/geckodriver*
 **/*reports/
+Makefile
