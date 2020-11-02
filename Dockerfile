@@ -8,7 +8,7 @@ RUN curl https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for
 ##################################
 ### Set the Pytest environment ###
 ##################################
-FROM python:3.8.3-alpine
+FROM python:3.9.0-alpine
 
 # Set the working directory
 WORKDIR /selenium_tests/

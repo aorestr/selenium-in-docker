@@ -19,7 +19,7 @@ services:
 
   selenium-hub:
     container_name: selenium-hub
-    image: selenium/hub:4.0.0
+    image: selenium/hub:3.141.59
     ports:
       - "4444:4444"
     networks:
@@ -27,7 +27,7 @@ services:
 
   selenium-firefox:
     container_name: selenium-firefox
-    image: selenium/node-firefox:4.0.0
+    image: selenium/node-firefox:3.141.59
     volumes:
       - /dev/shm:/dev/shm
     depends_on:

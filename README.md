@@ -77,7 +77,7 @@ deployed and the tests run.
 
 Once you've finished working on this, run:
 ```
-docker-compose down && docker system prune
+docker-compose down && docker system prune -f --volumes
 ```
 
 Your system status will be the same as before starting the process.
