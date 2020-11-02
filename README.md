@@ -8,8 +8,11 @@ version of **Firefox** could work but it won't for another. These tests work on 
 **Docker** is the king of fixing this kind of problems. I though it could be a good idea to create a scenario where
 tests were running faithfully and reliably.
 
-Everything here has be only tested on **Elementary OS 5.1.5 Hera** (based on _Ubuntu 18.04_). I've used
-**Docker 19.03.12**, **Docker Compose 1.26.1** and **Python 3.8.3**.
+Everything here has be tested on **Elementary OS 5.1.7 Hera** (based on _Ubuntu 18.04_). I've used
+**Docker 19.03.12-19.03.13**, **Docker Compose 1.26.1** and **Python 3.8.3-3.9.0**.
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=aorestr_selenium-in-docker&metric=alert_status)](https://sonarcloud.io/dashboard?id=aorestr_selenium-in-docker)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 
 #### Tests
 I've developed a small testing application under `selenium_tests/`. It uses **Pytest** as testing framework.
@@ -81,6 +84,9 @@ docker-compose down && docker system prune -f --volumes
 ```
 
 Your system status will be the same as before starting the process.
+
+To make things even more easier, I've created a `Makefile` with some helpful rules defined. Run `make run-tests-and-clean`
+and all tests will run and then the environment will be cleaned up.
 
 #### Deploy the scenario and run only specific tests
 Let's suppose you want to take advantage of this process but you don't need all the tests to be run.
