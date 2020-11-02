@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 
+from typing import NoReturn, Final
 from .base import BasePage
 
 
 class SearchPage(BasePage):
 
-    page_uri = "controller=search"
+    page_uri: Final = "controller=search"
     specific_title = "Search"
 
     def __init__(self, driver):
@@ -30,7 +31,7 @@ class SearchPage(BasePage):
         return self._get_element(self._error_notification_text_locator).text.strip()
 
     # Methods
-    def wait_for_page_to_load(self):
+    def wait_for_page_to_load(self) -> NoReturn:
         """
         Wait for some web elements to show up on the screen
         :return:

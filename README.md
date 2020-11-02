@@ -41,7 +41,7 @@ A VNC server is also installed. To sum up, they will create the infrastructure w
 You can read all the documentation about these images [here](https://github.com/SeleniumHQ/docker-selenium).
 
 #### pytest-host
-This image is defined on this repo `Dockerfile`. It consists on a _Ppython:3.8.3-alpine_ **Docker** image meaning that
+This image is defined on this repo `Dockerfile`. It consists on a _python:3.9.0-alpine_ **Docker** image meaning that
 the deployed container will be a very lightweight system (barely 100mB) with that Python version installed.
 
 The image copies the contents of the `selenium_tests/` directory and install the Python packages defined on

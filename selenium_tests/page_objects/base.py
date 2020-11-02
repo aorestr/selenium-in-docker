@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-
+from typing import NoReturn, Final
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 
 
@@ -10,12 +11,12 @@ class BasePage(object):
     Base class to initialize the base page that will be called from all pages
     """
 
-    BASE_URL = "http://automationpractice.com/index.php"
+    BASE_URL: Final = "http://automationpractice.com/index.php"
     page_uri = ""
-    BASE_TITLE = "My Store"
+    BASE_TITLE: Final = "My Store"
     specific_title = ""
 
-    def __init__(self, driver):
+    def __init__(self, driver: WebDriver):
         self._driver = driver
         self.wait_for_page_to_load()
         self._current_url_matches()
@@ -36,7 +37,7 @@ class BasePage(object):
         return self._get_element(self._search_input_locator)
 
     @search_input.setter
-    def search_input(self, query: str) -> None:
+    def search_input(self, query: str) -> NoReturn:
         self.search_input.clear()
         self.search_input.send_keys(query)
 
@@ -53,7 +54,7 @@ class BasePage(object):
         """
         return self._driver.find_element_by_xpath(xpath)
 
-    def _current_url_matches(self):
+    def _current_url_matches(self) -> NoReturn:
         """
         Make sure the current url of the page matches the expected title
         :return:
@@ -62,7 +63,7 @@ class BasePage(object):
         current_url = self._driver.current_url
         assert url in current_url, "URL '{0}' not on the current URL of the page ('{1}')".format(url, current_url)
 
-    def _title_matches(self):
+    def _title_matches(self) -> NoReturn:
         """
         Make sure the title of the page matches the expected title
         :return:
@@ -82,7 +83,7 @@ class BasePage(object):
         self.search_button.click()
         return SearchPage(self._driver)
 
-    def wait_for_page_to_load(self):
+    def wait_for_page_to_load(self) -> NoReturn:
         """
         Wait for some web elements to show up on the screen
         :return:

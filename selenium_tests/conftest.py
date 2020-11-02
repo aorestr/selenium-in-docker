@@ -2,14 +2,16 @@
 
 import os.path
 import pathlib
+from typing import Final
 import pytest
 from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 from .page_objects.base import BasePage
 
 
-IMPLICITLY_WAIT = 30
+IMPLICITLY_WAIT: Final = 30
 TESTING_URL = "http://automationpractice.com"
 GECKODRIVER_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "geckodriver")
 
@@ -35,7 +37,7 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture(scope="session")
-def get_driver(request):
+def get_driver(request) -> WebDriver:
     """
     Generate the Selenium driver that will be used by the tests
     :param request:
@@ -51,7 +53,7 @@ def get_driver(request):
 
 
 @pytest.fixture(scope="function")
-def open_and_close_browser(get_driver):
+def open_and_close_browser(get_driver: WebDriver) -> BasePage:
     """
     Open the browser and when the test is done it closes it
     :param get_driver: fixture that returns the Selenium driver
@@ -59,4 +61,4 @@ def open_and_close_browser(get_driver):
     """
     get_driver.implicitly_wait(IMPLICITLY_WAIT)
     get_driver.get(TESTING_URL)
-    yield BasePage(get_driver)
+    return BasePage(get_driver)
