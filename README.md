@@ -88,6 +88,10 @@ Your system status will be the same as before starting the process.
 To make things even more easier, I've created a `Makefile` with some helpful rules defined. Run `make run-tests-and-clean`
 and all tests will run and then the environment will be cleaned up.
 
+### Debug mode
+If you would like to see what it's happening on the Docker, you can use the "debug" mode. Just edit
+file `.env`, set `DEBUG` to `-debug` and then follow [this instructions here](https://github.com/SeleniumHQ/docker-selenium#debugging).
+
 #### Deploy the scenario and run only specific tests
 Let's suppose you want to take advantage of this process but you don't need all the tests to be run.
 
