@@ -43,22 +43,24 @@ def get_driver(request) -> WebDriver:
     :param request:
     :return: a callable that generates the driverSelenium WebDriver instance
     """
+    driver: WebDriver
     if request.config.getoption("--remote"):
         url = "http://{host}:{port}/wd/hub".format(
             host=request.config.getoption("--rmt-host"), port=request.config.getoption("--rmt-port")
         )
-        return webdriver.Remote(url, DesiredCapabilities.FIREFOX)
+        driver = webdriver.Remote(url, DesiredCapabilities.FIREFOX)
     else:
-        return webdriver.Firefox(executable_path=GECKODRIVER_PATH)
+        driver = webdriver.Firefox(executable_path=GECKODRIVER_PATH)
+    driver.implicitly_wait(IMPLICITLY_WAIT)
+    yield driver
 
 
 @pytest.fixture(scope="function")
-def open_and_close_browser(get_driver: WebDriver) -> BasePage:
+def go_to_base_page(get_driver: WebDriver) -> BasePage:
     """
     Open the browser and when the test is done it closes it
     :param get_driver: fixture that returns the Selenium driver
     :return: a BasePage instance
     """
-    get_driver.implicitly_wait(IMPLICITLY_WAIT)
     get_driver.get(TESTING_URL)
     return BasePage(get_driver)

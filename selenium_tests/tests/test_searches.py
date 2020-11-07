@@ -1,13 +1,15 @@
 from faker import Faker
 
+from ..page_objects.base import BasePage
 
-def test_fake_search_returns_nothing(open_and_close_browser):
+
+def test_fake_search_returns_nothing(go_to_base_page: BasePage):
     """
     Search for a non existing product
-    :param open_and_close_browser: fixture to open and close the browser
+    :param go_to_base_page: fixture to open and close the browser
     :return:
     """
-    base_page = open_and_close_browser
+    base_page = go_to_base_page
     random_text = Faker().text()
     search_page = base_page.search_product(random_text)
     error_msg = "Some results are found even after using the random string '{}'".format(random_text)
@@ -15,13 +17,13 @@ def test_fake_search_returns_nothing(open_and_close_browser):
     assert 0 == search_page.results_counter_text, error_msg
 
 
-def test_empty_search_returns_nothing(open_and_close_browser):
+def test_empty_search_returns_nothing(go_to_base_page: BasePage):
     """
     Insert an empty query
-    :param open_and_close_browser: fixture to open and close the browser
+    :param go_to_base_page: fixture to open and close the browser
     :return:
     """
-    base_page = open_and_close_browser
+    base_page = go_to_base_page
     search_page = base_page.search_product("")
     error_msg = "Some results are found even after inserting an empty string"
     assert "Please enter a search keyword" in search_page.error_notification_text, error_msg

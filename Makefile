@@ -20,6 +20,7 @@ run-all-tests:
 tests-cleanup:
 	@echo Containers used for the project will be removed now.
 	@docker-compose down && docker system prune -f --volumes
+	@docker rmi -f selenium_testing_pytest-host
 	@echo All unused containers are removed.
 
 run-tests-and-clean: run-all-tests tests-cleanup

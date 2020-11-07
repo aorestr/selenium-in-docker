@@ -7,11 +7,13 @@ services:
     depends_on:
      - selenium-hub
      - selenium-firefox
-    entrypoint: ["./wait-for-it.sh", "-t", "15", "selenium-firefox:5555", "--"]
-    # the wait-for-it.sh command makes the container wait until the Selenium containers are ready to work
-    command: [
-      "pytest", "--remote", "--rmt-host=selenium-hub", "--rmt-port=4444"
+    entrypoint: [
+        "./wait-for-it.sh", "-t", "15", "selenium-firefox:5555", "--", "pytest",
+        "--remote", "--rmt-host=selenium-hub", "--rmt-port=4444"
     ]
+    # the wait-for-it.sh command makes the container wait until the Selenium containers are ready to work
+    command: [ "-n2" ]
+    # There will be "-n" tests running in parallel
     volumes:
       - ./remote_reports/:/selenium_tests/reports/
     networks:
@@ -35,6 +37,8 @@ services:
     environment:
       - HUB_HOST=selenium-hub
       - HUB_PORT=4444
+      - NODE_MAX_INSTANCES=3        # If not set, tests won't be concurrently run
+      - NODE_MAX_SESSION=3          # If not set, tests won't be concurrently run
     networks:
       selenium_net: {}
     ports:

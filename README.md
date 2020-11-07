@@ -73,7 +73,7 @@ There are several ways of running the tests using the developed **Docker** infra
 #### Deploy the scenario and run all the tests
 This is easily the simplest way of running your tests. Once your test files are up to date, you can run
 ```
-docker-compose -p selenium_testing up --build --abort-on-container-exit --remove-orphans 
+docker-compose up --abort-on-container-exit --remove-orphans 
 ```
 The _pytest-host_ image will always be built so new changes will be implemented. Then all the containers will be
 deployed and the tests run.
@@ -86,9 +86,9 @@ docker-compose down && docker system prune -f --volumes
 Your system status will be the same as before starting the process.
 
 To make things even more easier, I've created a `Makefile` with some helpful rules defined. Run `make run-tests-and-clean`
-and all tests will run and then the environment will be cleaned up.
+and all tests will run and then the environment will be cleaned up. This is the option I highly encourage to use.
 
-### Debug mode
+#### Debug mode
 If you would like to see what it's happening on the Docker, you can use the "debug" mode. Just edit
 file `.env`, set `DEBUG` to `-debug` and then follow [this instructions here](https://github.com/SeleniumHQ/docker-selenium#debugging).
 
@@ -98,7 +98,7 @@ Let's suppose you want to take advantage of this process but you don't need all 
 Using our example, we will execute only the tests contained under the module `selenium_tests/tests/tests_searches.py`.
 Run the following:
 ```
-docker-compose build && docker-compose run --rm pytest-host pytest tests/test_searches.py --remote --rmt-host=selenium-hub --rmt-port=4444
+docker-compose run --rm pytest-host tests/test_searches.py
 ```
 
 If you ran the `docker-compose up` command before and receive an error message similar to
@@ -107,3 +107,7 @@ containers involved. If you rather want to remove all the active containers, run
 ```
 docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
 ```
+
+#### Concurrent executions
+By default, when running the tests with `docker-compose up`, they will be executed in parallel two at the time. 
+You can change this by modifying the `-n` flag of the `pytest` command.
