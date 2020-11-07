@@ -8,11 +8,8 @@ from selenium import webdriver
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-from .page_objects.base import BasePage
-
 
 IMPLICITLY_WAIT: Final = 30
-TESTING_URL: Final = "http://automationpractice.com"
 GECKODRIVER_PATH: Final = os.path.join(pathlib.Path(__file__).parent.absolute(), "geckodriver")
 
 
@@ -53,14 +50,4 @@ def get_driver(request) -> WebDriver:
         driver = webdriver.Firefox(executable_path=GECKODRIVER_PATH)
     driver.implicitly_wait(IMPLICITLY_WAIT)
     yield driver
-
-
-@pytest.fixture(scope="function")
-def go_to_base_page(get_driver: WebDriver) -> BasePage:
-    """
-    Open the browser and when the test is done it closes it
-    :param get_driver: fixture that returns the Selenium driver
-    :return: a BasePage instance
-    """
-    get_driver.get(TESTING_URL)
-    return BasePage(get_driver)
+    driver.close()
