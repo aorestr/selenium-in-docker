@@ -9,8 +9,8 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
-IMPLICITLY_WAIT: Final = 30
-GECKODRIVER_PATH: Final = os.path.join(pathlib.Path(__file__).parent.absolute(), "geckodriver")
+IMPLICITLY_WAIT: Final[int] = 30
+GECKODRIVER_PATH: Final[str] = os.path.join(pathlib.Path(__file__).parent.absolute(), "geckodriver")
 
 
 def pytest_addoption(parser):
@@ -42,10 +42,11 @@ def get_driver(request) -> WebDriver:
     """
     driver: WebDriver
     if request.config.getoption("--remote"):
-        url = "http://{host}:{port}/wd/hub".format(
-            host=request.config.getoption("--rmt-host"), port=request.config.getoption("--rmt-port")
+        driver = webdriver.Remote(
+            "http://{host}:{port}/wd/hub".format(
+                host=request.config.getoption("--rmt-host"), port=request.config.getoption("--rmt-port")
+            ), DesiredCapabilities.FIREFOX
         )
-        driver = webdriver.Remote(url, DesiredCapabilities.FIREFOX)
     else:
         driver = webdriver.Firefox(executable_path=GECKODRIVER_PATH)
     driver.implicitly_wait(IMPLICITLY_WAIT)

@@ -8,7 +8,7 @@ from ..page_objects.base import BasePage
 
 class TestBase(object):
 
-    TESTING_URL: Final = "http://automationpractice.com"
+    TESTING_URL: Final[str] = "http://automationpractice.com"
 
     @staticmethod
     @pytest.fixture(scope="function")
